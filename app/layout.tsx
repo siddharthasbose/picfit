@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-neutral-950 text-neutral-200 antialiased">
         {GA_ID && (
           <>
             <Script
@@ -31,8 +31,6 @@ export default function RootLayout({
             </Script>
           </>
         )}
-      </head>
-      <body className="min-h-screen bg-neutral-950 text-neutral-200 antialiased">
         <header className="border-b border-neutral-800">
           <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
             <a href="/" className="font-bold text-yellow-400 text-lg">
