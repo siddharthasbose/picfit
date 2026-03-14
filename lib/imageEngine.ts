@@ -338,7 +338,8 @@ export async function processImage(
     const srcH = srcCanvas.height;
     const downscaleRatio = Math.max(srcW / targetWidth, srcH / targetHeight);
 
-    // Heavier downscale = more aggressive sharpening
+    // Heavier downscale = more aggressive sharpening.
+    // Tuned for tiny exam targets (e.g. 100x120) to preserve edge clarity.
     let unsharpAmount: number, unsharpRadius: number;
     if (downscaleRatio <= 1.5) {
       // Minimal resize — light sharpen to preserve original detail
@@ -347,10 +348,13 @@ export async function processImage(
     } else if (downscaleRatio <= 3) {
       unsharpAmount = 160;
       unsharpRadius = 0.8;
+    } else if (downscaleRatio <= 6) {
+      unsharpAmount = 260;
+      unsharpRadius = 0.9;
     } else {
-      // Heavy downscale (>3x) — aggressive
-      unsharpAmount = 250;
-      unsharpRadius = 1.0;
+      // Extreme downscale (>6x) — stronger, slightly tighter radius
+      unsharpAmount = 320;
+      unsharpRadius = 0.8;
     }
 
     destCanvas = await picaResizeMultiPass(

@@ -13,6 +13,7 @@ export default function SignatureResizerPage() {
   const [preset, setPreset] = useState<ExamPreset | null>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [uploaderKey, setUploaderKey] = useState(0);
   const [result, setResult] = useState<ProcessResult | null>(null);
   const [processing, setProcessing] = useState(false);
 
@@ -44,10 +45,15 @@ export default function SignatureResizerPage() {
     }
   };
 
-  const reset = () => {
+  const clearUploadState = () => {
     setResult(null);
     setImage(null);
     setFile(null);
+  };
+
+  const reset = () => {
+    clearUploadState();
+    setUploaderKey((k) => k + 1);
   };
 
   return (
@@ -64,15 +70,22 @@ export default function SignatureResizerPage() {
       <ExamPresetSelector
         type="signature"
         selectedPreset={preset}
+        onCategoryChange={() => {
+          clearUploadState();
+          setPreset(null);
+          setUploaderKey((k) => k + 1);
+        }}
         onSelect={(p) => {
+          clearUploadState();
           setPreset(p);
-          setResult(null);
+          setUploaderKey((k) => k + 1);
         }}
       />
 
       {/* Step 2: Upload */}
       {preset && (
         <ImageUploader
+          key={`${preset.id}-${uploaderKey}`}
           onImageLoad={handleImageLoad}
           label="Upload Signature"
         />

@@ -90,8 +90,10 @@ async function processImage(
       sigma = 0.5; m1 = 0.5; m2 = 5;
     } else if (downscaleRatio <= 3) {
       sigma = 1.0; m1 = 0.8; m2 = 8;
+    } else if (downscaleRatio <= 6) {
+      sigma = 1.3; m1 = 1.0; m2 = 10;
     } else {
-      sigma = 1.5; m1 = 1.0; m2 = 12;
+      sigma = 1.2; m1 = 1.4; m2 = 14;
     }
 
     processedBuf = await sharp(inputBuf)

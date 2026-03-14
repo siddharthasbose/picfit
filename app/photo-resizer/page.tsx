@@ -14,6 +14,8 @@ export default function PhotoResizerPage() {
   const [preset, setPreset] = useState<ExamPreset | null>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [uploaderKey, setUploaderKey] = useState(0);
+  const [dateStamperKey, setDateStamperKey] = useState(0);
   const [dateStampEnabled, setDateStampEnabled] = useState(false);
   const [dateStamp, setDateStamp] = useState<
     { name: string; date: string } | undefined
@@ -41,7 +43,7 @@ export default function PhotoResizerPage() {
         maxKB: preset.maxKB,
         bgColor: preset.bgColor,
         format: preset.format,
-        dateStamp,
+        dateStamp: dateStampEnabled ? dateStamp : undefined,
         signatureMode: false,
       });
       setResult(res);
@@ -50,10 +52,15 @@ export default function PhotoResizerPage() {
     }
   };
 
-  const reset = () => {
+  const clearUploadState = () => {
     setResult(null);
     setImage(null);
     setFile(null);
+  };
+
+  const reset = () => {
+    clearUploadState();
+    setUploaderKey((k) => k + 1);
   };
 
   return (
@@ -69,21 +76,37 @@ export default function PhotoResizerPage() {
       <ExamPresetSelector
         type="photo"
         selectedPreset={preset}
+        onCategoryChange={() => {
+          clearUploadState();
+          setPreset(null);
+          setDateStampEnabled(false);
+          setDateStamp(undefined);
+          setUploaderKey((k) => k + 1);
+          setDateStamperKey((k) => k + 1);
+        }}
         onSelect={(p) => {
+          clearUploadState();
           setPreset(p);
-          setResult(null);
           setDateStampEnabled(p.requiresDateStamp);
+          setDateStamp(undefined);
+          setUploaderKey((k) => k + 1);
+          setDateStamperKey((k) => k + 1);
         }}
       />
 
       {/* Step 2: Upload */}
       {preset && (
         <>
-          <ImageUploader onImageLoad={handleImageLoad} label="Upload Photo" />
+          <ImageUploader
+            key={`${preset.id}-${uploaderKey}`}
+            onImageLoad={handleImageLoad}
+            label="Upload Photo"
+          />
 
           {/* Date stamp */}
           {preset.requiresDateStamp && (
             <DateStamper
+              key={`${preset.id}-${dateStamperKey}`}
               enabled={dateStampEnabled}
               onToggle={setDateStampEnabled}
               onStampChange={setDateStamp}

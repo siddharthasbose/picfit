@@ -134,16 +134,19 @@ async function processImageSharp(
     const downscaleRatio = Math.max(srcW / targetWidth, srcH / targetHeight);
 
     // Adaptive sharpening based on downscale ratio:
-    // - Minimal resize (≤1.5x): light sharpen, preserve original detail
+    // - Minimal resize (<=1.5x): light sharpen, preserve original detail
     // - Moderate (1.5-3x): medium sharpen
-    // - Heavy (>3x): aggressive sharpen to compensate for lost detail
+    // - Heavy (3-6x): stronger sharpen
+    // - Extreme (>6x): strong + tighter radius for tiny targets
     let sigma: number, m1: number, m2: number;
     if (downscaleRatio <= 1.5) {
       sigma = 0.5; m1 = 0.5; m2 = 5;
     } else if (downscaleRatio <= 3) {
       sigma = 1.0; m1 = 0.8; m2 = 8;
+    } else if (downscaleRatio <= 6) {
+      sigma = 1.3; m1 = 1.0; m2 = 10;
     } else {
-      sigma = 1.5; m1 = 1.0; m2 = 12;
+      sigma = 1.2; m1 = 1.4; m2 = 14;
     }
 
     processedBuf = await sharp(inputBuf)

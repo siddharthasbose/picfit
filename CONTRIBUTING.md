@@ -47,7 +47,8 @@ Source Image
 - Unsharp amounts by downscale ratio:
   - ≤1.5x: amount=80, radius=0.4
   - 1.5-3x: amount=160, radius=0.8
-  - >3x: amount=250, radius=1.0
+  - 3-6x: amount=260, radius=0.9
+  - >6x: amount=320, radius=0.8
 - Multi-pass threshold: ratio > 4 triggers 2-pass resize
 
 ### Signatures

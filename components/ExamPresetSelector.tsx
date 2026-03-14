@@ -7,9 +7,15 @@ interface Props {
   type: "photo" | "signature" | "all";
   selectedPreset: ExamPreset | null;
   onSelect: (preset: ExamPreset) => void;
+  onCategoryChange?: (category: string | null) => void;
 }
 
-export default function ExamPresetSelector({ type, selectedPreset, onSelect }: Props) {
+export default function ExamPresetSelector({
+  type,
+  selectedPreset,
+  onSelect,
+  onCategoryChange,
+}: Props) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const filteredPresets = PRESETS.filter((p) => {
@@ -29,7 +35,11 @@ export default function ExamPresetSelector({ type, selectedPreset, onSelect }: P
         {categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
+            onClick={() => {
+              const nextCategory = activeCategory === cat ? null : cat;
+              setActiveCategory(nextCategory);
+              onCategoryChange?.(nextCategory);
+            }}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
               activeCategory === cat
                 ? "bg-yellow-400 text-neutral-900"
