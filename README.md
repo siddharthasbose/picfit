@@ -1,4 +1,4 @@
-# PicFit
+# FitPic
 
 Resize photos and signatures for Indian government exam form uploads. 100% client-side — your images never leave your browser.
 
@@ -6,7 +6,7 @@ Resize photos and signatures for Indian government exam form uploads. 100% clien
 
 Every Indian government exam (SSC, UPSC, IBPS, NEET, JEE, PAN, Passport, etc.) has different photo and signature requirements — specific pixel dimensions, file size limits in KB, and format rules. Getting these wrong means your application gets rejected.
 
-PicFit handles all of this automatically: pick your exam, upload your photo or signature, and download a correctly sized file that meets all requirements.
+FitPic handles all of this automatically: pick your exam, upload your photo or signature, and download a correctly sized file that meets all requirements.
 
 ## Features
 
@@ -40,8 +40,8 @@ PicFit handles all of this automatically: pick your exam, upload your photo or s
 
 ```bash
 # Clone
-git clone https://github.com/siddharthasbose/picfit.git
-cd picfit
+git clone https://github.com/siddharthasbose/fitpic.git
+cd fitpic
 
 # Install dependencies
 npm install

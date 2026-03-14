@@ -1,5 +1,5 @@
-export const SITE_NAME = "PicFit";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://picfit.in";
+export const SITE_NAME = "FitPic";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fitpic.in";
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 export const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID || "";
 

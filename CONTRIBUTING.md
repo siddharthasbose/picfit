@@ -1,10 +1,10 @@
-# Contributing to PicFit
+# Contributing to FitPic
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/siddharthasbose/picfit.git
-cd picfit
+git clone https://github.com/siddharthasbose/fitpic.git
+cd fitpic
 npm install
 npm run dev        # localhost:3000
 npm test           # 28 tests
